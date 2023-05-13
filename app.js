@@ -1,17 +1,3 @@
-const ar = [];
-ar[10] = 100;
-ar [0] = 'hello';
-ar[3] = [];
-ar.length = 0;
-ar[0] = 1;
-const ar2 = [[1,6], [2,0,0], [3, 1]];
-//add at array end
-ar[ar.length] = 10;
-let s = ar.push(...ar2);
-ar[10];
-//method "map"
-//console.log([1, 2, 3].map(n => n ** 2));
-
 function getRandomIntNumber(min, max, minInclusive=true, maxInclusive=false) {
     if (!minInclusive) {
         min++;
@@ -58,28 +44,50 @@ function getMatrixRandomIntNumbers(rows, columns, min, max) {
     return res.map(() => getArrayRandomIntNumbers(columns, min, max) )
 }
 
-//splice method for updating array
-let arS = [10, 20, -70, 100, 6, -10, 0];
-const arI = [1, 2, 3];
-let index = arS.indexOf(-70);
-arS.splice(index + 1, 0, ...arI);
-// console.log(arS)
-// console.log(arS.slice(index + 1, index + 4))
-// console.log(arS);
-let indexFirstNegative = arS.findIndex(v => v < 0);
-//console.log(index == indexFirstNegative);
-//arS = arS.filter(v => v > 0);
-//console.log(arS);
-console.log(arS.every(v => v > 0))
-console.log(arS.some(v => v < 0))
-
-function arraycopy(src, posSrc, dst, posDst=0, length) {
+function arraycopy(src, posSrc, dst, posDst, length = src.length) {
     //TODO copy "length" elements from position "posSrc" of array "src" to array "dst" from position "posDst"
+    if(posDst + length > dst.length){
+        length = dst.length - posDst;
+    }
+    let array1 = dst.slice(0, posDst);
+    let array2 = src.slice(posSrc, posSrc + length);
+    if(array2.length < length){
+        length = array2.length;
+    }
+    let array3 = dst.slice(posDst + length, dst.length);
+
+    return Array.prototype.concat(array1, array2, array3);
 }
 
 function moveElement(array, position, shift) {
-    //example: ar =  [1, 2, 3, 4, 5] ; moveElement(ar,2, 1) => [1,2,4,3,5];
-    //example: ar =  [1, 2, 3, 4, 5] ; moveElement(ar,2, -2) => [3,1,2,4,5];
-    //example: ar =  [1, 2, 3, 4, 5] ; moveElement(ar,2, -20) => [3,1,2,4,5];
-    //example: ar =  [1, 2, 3, 4, 5] ; moveElement(ar,2, 20) => [1,2,4,5,3];
+    let res = [];
+    if(position > array.length - 1 || position < 0){
+        res = array;
+    } else {
+        let newPosition = position + shift;
+        if(newPosition > array.length - 1){
+            newPosition = array.length - 1;
+        } else if (newPosition < 0) {
+            newPosition = 0;
+        }
+        res = swapElement(array, position, newPosition);
+    }
+
+    return res;
 }
+
+function swapElement(array, oldPosition, newPosition){
+    let item = array[newPosition];
+    array[newPosition] = array[oldPosition];
+    array[oldPosition] = item;
+    return array;
+}
+
+let array1 = [1,2,3,4,5];
+let array2 = [10,9,8,7,6,5,4,3,2,1];
+
+let newArray = arraycopy(array1, 3, array2, 7, 10);
+console.log(newArray);
+
+let newArray1 = moveElement(array1, 3, -2);
+// console.log(newArray1);
