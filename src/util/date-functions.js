@@ -10,3 +10,6 @@ export function getDaysBetweenDates(fromDate, toDate) {
     const difference = toDate.getTime() - fromDate.getTime();
     return Math.ceil(difference / (1000 * 3600 * 24));
 }
+export function getAgeEmployee(employee) {
+    return new Date().getFullYear() - employee.birthYear;
+}
