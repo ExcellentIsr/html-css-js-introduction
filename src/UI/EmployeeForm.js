@@ -12,13 +12,15 @@ export default class EmployeeForm {
         const { minSalary, maxSalary, minYear, maxYear } = employeesConfig;
         parentElement.innerHTML =
             `<form class="form-control" id="${parentId}-form-id">
+            <fieldset>
+            <legend>Personalia:</legend>
                 <div class="text-field">
                     <label class="text-field__label" for="name">Name</label>
                     <input class="text-field__input" type="text" name="name" id="name" placeholder="Enter his name">
                 </div>
                 <div class="radio-group">
                     <div class="radio-control">
-                        <label class="text-field__label" for="female-id">Female</label>
+                        <label class="text-field__radio-label" for="female-id">Female</label>
                         <input class="text-field__input" id="female-id" type="radio" name="gender" required value="Female" unchecked>
                     </div>
                     <div class="radio-control">
@@ -36,9 +38,16 @@ export default class EmployeeForm {
                 </div>
                 <div class="text-field">
                     <label class="text-field__label" for="department">Department</label>
-                    <input class="text-field__input" type="text" name="department" id="department" placeholder="Enter his department">
+                    <select class="text-field__input" name="department" id="department">
+                        <option value="QA">QA</option>
+                        <option value="Analytics">Analytics</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Tester">Tester</option>
+                        <option value="Management">Management</option>
+                    </select>
                 </div>
                 <button type="submit" class="menu-button menu-button1">Submit</button>    
+                </fieldset>
             </form>`
     }
     #setElements(parentId){
